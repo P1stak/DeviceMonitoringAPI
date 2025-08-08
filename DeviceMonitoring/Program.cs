@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.UseUrls("http://*:80");
 
 // Подключил контроллеры
 builder.Services.AddControllers();
@@ -11,6 +12,19 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Device Monitoring API", Version = "v1" });
 });
+
+
+// Настройки CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 
 // DI
 builder.Services.AddSingleton<IDeviceRepository, DeviceRepository>();
@@ -25,15 +39,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowAll");
 app.UseAuthorization();
 app.MapControllers();
-
-// angular cors
-app.UseCors(x =>
-
-    x.WithOrigins("http://localhost:4200")
-    .AllowAnyMethod()
-    .AllowAnyHeader());
 
 
 app.Run();
