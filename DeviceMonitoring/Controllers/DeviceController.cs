@@ -22,7 +22,18 @@ namespace DeviceMonitoring.Controllers
         {
             try
             {
+                if (device == null)
+                {
+                    return BadRequest("Нет данных об устройстве");
+                }
+
+                if (string.IsNullOrEmpty(device.Name))
+                {
+                    return BadRequest("Нет имени девайса");
+                }
+
                 await _deviceRepository.AddDeviceAsync(device);
+
                 _logger.LogInformation($"Устройство успешно добавлено - {device.Id}");
 
                 return CreatedAtAction(nameof(GetDevice), new { id = device.Id }, device);
@@ -40,6 +51,7 @@ namespace DeviceMonitoring.Controllers
             try
             {
                 var devices = await _deviceRepository.GetAllDevicesAsync();
+
                 _logger.LogInformation($"Получено {devices.Count()} устройств");
 
                 return Ok(devices);
@@ -47,6 +59,7 @@ namespace DeviceMonitoring.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, "Ошибка получения устройств");
+
                 return StatusCode(500, "Ошибка сервера");
             }
         }
@@ -61,6 +74,7 @@ namespace DeviceMonitoring.Controllers
                 if (!devices.Any())
                 {
                     _logger.LogInformation($"Не найдено устройство - {id}");
+
                     return NotFound();
                 }
                 return Ok(devices);
@@ -68,6 +82,7 @@ namespace DeviceMonitoring.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, $"Ошибка получения устройства {id}");
+
                 return StatusCode(500, "Ошибка сервера");
             }
         }
@@ -83,6 +98,7 @@ namespace DeviceMonitoring.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, "Ошибка удаления старой сессии");
+
                 return StatusCode(500, "Ошибка сервера");
             }
         }
@@ -104,6 +120,7 @@ namespace DeviceMonitoring.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, "Ошибка создания резервной копии");
+
                 return StatusCode(500, "Ошибка сервера");
 
             }

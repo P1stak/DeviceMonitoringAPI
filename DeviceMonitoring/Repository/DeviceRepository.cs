@@ -18,6 +18,11 @@ namespace DeviceMonitoring.Repository
         {
             try
             {
+                if (string.IsNullOrEmpty(device.Id.ToString()))
+                {
+                    device.Id = Guid.NewGuid();
+                }
+
                 _devices.TryAdd(device.Id, device);
                 _logger.LogInformation($"Добавлено устройство - {device.Id}");
 

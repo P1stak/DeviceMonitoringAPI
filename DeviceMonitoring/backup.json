@@ -1,0 +1,23 @@
+[
+    {
+        "Id": "5098e4d2-86c2-4a57-97ba-f5a4d2dc65db",
+        "Name": "Iphone 11 (IOS)",
+        "StartTime": "2022-01-01T00:00:00Z",
+        "EndTime": "2022-01-03T00:00:00Z",
+        "Version": "1.0.0.58"
+    },
+    {
+        "Id": "4098e4d2-86c2-4a57-97ba-f5a4d2dc65db",
+        "Name": "Test Device",
+        "StartTime": "2023-01-01T00:00:00Z",
+        "EndTime": "2023-01-02T00:00:00Z",
+        "Version": "1.0.0.57"
+    },
+    {
+        "Id": "1111e4d2-86c2-4a57-97ba-f5a4d2dc65db",
+        "Name": "Win 11",
+        "StartTime": "2025-02-01T00:00:00Z",
+        "EndTime": "2026-12-03T00:00:00Z",
+        "Version": "1.0.0.60"
+    }
+]
