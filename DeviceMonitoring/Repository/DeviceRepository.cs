@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace DeviceMonitoring.Repository
 {
-    public class DeviceRepository
+    public class DeviceRepository : IDeviceRepository
     {
         private readonly ConcurrentDictionary<Guid, Device> _devices = new();
         private readonly ILogger<DeviceRepository> _logger;
@@ -32,8 +32,8 @@ namespace DeviceMonitoring.Repository
 
 
         public Task<IEnumerable<Device>> GetAllDevicesAsync()
-        { 
-            return Task.FromResult( _devices.Values.AsEnumerable() );
+        {
+            return Task.FromResult(_devices.Values.AsEnumerable());
         }
 
         public Task<IEnumerable<Device>> GetTryByIdAsunc(Guid id)
@@ -45,7 +45,7 @@ namespace DeviceMonitoring.Repository
                 _logger.LogWarning($"Не найдено устройство {id}");
             }
 
-            return Task.FromResult( device.AsEnumerable() );
+            return Task.FromResult(device.AsEnumerable());
         }
 
         public Task ClearOldRecordsAsync(DateTime date)
@@ -54,7 +54,7 @@ namespace DeviceMonitoring.Repository
 
             foreach (var item in oldRecords)
             {
-                _devices.TryRemove(item.Key, out _ );
+                _devices.TryRemove(item.Key, out _);
             }
 
             _logger.LogInformation($"Кол-во удаленных старых сессий - {oldRecords.Count}");
